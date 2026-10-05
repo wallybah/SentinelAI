@@ -100,6 +100,26 @@ def root():
 # HEALTH ENDPOINT
 # ============================================================
 
+@app.get("/api/latest-analysis")
+def latest_analysis():
+    """
+    Return the latest SentinelAI analysis.
+
+    Used by the separate AI Assistant service when
+    the services are deployed independently.
+    """
+
+    analysis = load_latest_analysis()
+
+    if analysis is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail="No latest analysis is available.",
+        )
+
+    return analysis
+
 @app.get("/api/health")
 def health_check():
 
@@ -624,12 +644,12 @@ def clean_attack_name(name):
     value = str(name)
 
     replacements = {
-        "ï¿½": "–",
-        "Ã¯Â¿Â½": "–",
-        "â€“": "–",
-        "â€”": "—",
-        "Ã¢â‚¬â€œ": "–",
-        "Ã¢â‚¬â€": "–",
+        "ÃƒÂ¯Ã‚Â¿Ã‚Â½": "Ã¢â‚¬â€œ",
+        "ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½": "Ã¢â‚¬â€œ",
+        "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“": "Ã¢â‚¬â€œ",
+        "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â": "Ã¢â‚¬â€",
+        "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ": "Ã¢â‚¬â€œ",
+        "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬": "Ã¢â‚¬â€œ",
     }
 
     for bad, good in replacements.items():
@@ -1619,7 +1639,7 @@ def generate_soc_pdf(
 
                 story.append(
                     Paragraph(
-                        f"• {item}",
+                        f"Ã¢â‚¬Â¢ {item}",
                         small_style,
                     )
                 )
