@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        SentinelAI | Network Threat Detection
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- ======================================================
+         SIDEBAR
+         ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛡
+            </div>
+
+            <div>
+
+                <h1>
+                    SentinelAI
+                </h1>
+
+                <span>
+                    THREAT DETECTION
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <button
+                class="nav-item active"
+                data-page="dashboard"
+            >
+                <span>▣</span>
+                Dashboard
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="upload"
+            >
+                <span>↑</span>
+                Analyze CSV
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="results"
+            >
+                <span>▥</span>
+                Results
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="assistant"
+            >
+                <span>✦</span>
+                AI Assistant
+            </button>
+
+
+            <button
+                class="nav-item"
+                data-page="about"
+            >
+                <span>ⓘ</span>
+                About
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="system-indicator">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        System
+                    </strong>
+
+                    <small id="sidebar-status">
+                        Checking API...
+                    </small>
+
+                </div>
+
+            </div>
+
+            <p>
+                SentinelAI v1.0
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ======================================================
+         MAIN CONTENT
+         ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- ==================================================
+             TOP BAR
+             ================================================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="eyebrow">
+                    SECURITY OPERATIONS CENTER
+                </p>
+
+                <h2 id="page-title">
+                    Network Security Dashboard
+                </h2>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <div
+                    class="api-status"
+                    id="api-status"
+                >
+
+                    <span class="status-dot"></span>
+
+                    <span id="api-status-text">
+                        Checking API...
+                    </span>
+
+                </div>
+
+
+                <div class="user-avatar">
+                    SA
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==================================================
+             DASHBOARD PAGE
+             ================================================== -->
+
+        <section
+            class="page active"
+            id="dashboard-page"
+        >
+
+            <div class="welcome">
+
+                <div>
+
+                    <p class="eyebrow">
+                        SENTINELAI
+                    </p>
+
+                    <h3>
+                        Intelligent Network
+                        Threat Detection
+                    </h3>
+
+                    <p>
+                        Analyze network-flow datasets
+                        using a machine-learning threat
+                        detection engine.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    data-page="upload"
+                >
+
+                    Analyze Dataset
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 STATISTICS
+                 ================================================== -->
+
+            <div class="stats-grid">
+
+
+                <article class="stat-card">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Total Flows
+                        </span>
+
+                        <span class="stat-icon">
+                            ≪
+                        </span>
+
+                    </div>
+
+                    <strong id="total-flows">
+                        0
+                    </strong>
+
+                    <small>
+                        Network records analyzed
+                    </small>
+
+                </article>
+
+
+
+                <article class="stat-card danger">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Malicious
+                        </span>
+
+                        <span class="stat-icon">
+                            ⚠
+                        </span>
+
+                    </div>
+
+                    <strong id="malicious-flows">
+                        0
+                    </strong>
+
+                    <small>
+                        Threats detected
+                    </small>
+
+                </article>
+
+
+
+                <article class="stat-card success">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Benign
+                        </span>
+
+                        <span class="stat-icon">
+                            ✓
+                        </span>
+
+                    </div>
+
+                    <strong id="benign-flows">
+                        0
+                    </strong>
+
+                    <small>
+                        Normal traffic
+                    </small>
+
+                </article>
+
+
+
+                <article class="stat-card warning">
+
+                    <div class="stat-header">
+
+                        <span>
+                            Attack Rate
+                        </span>
+
+                        <span class="stat-icon">
+                            %
+                        </span>
+
+                    </div>
+
+                    <strong id="attack-rate">
+                        0%
+                    </strong>
+
+                    <small>
+                        Malicious traffic percentage
+                    </small>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 DASHBOARD GRID
+                 ================================================== -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- ATTACK DISTRIBUTION -->
+
+                <article class="panel large-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <p class="eyebrow">
+                                THREAT INTELLIGENCE
+                            </p>
+
+                            <h3>
+                                Attack Distribution
+                            </h3>
+
+                        </div>
+
+                        <span
+                            class="panel-badge"
+                            id="analysis-badge"
+                        >
+                            Awaiting Analysis
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="attack-list"
+                        id="attack-list"
+                    >
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                ◌
+                            </div>
+
+                            <h4>
+                                No analysis available
+                            </h4>
+
+                            <p>
+                                Upload a network-flow CSV
+                                to see detected attacks.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- SEVERITY -->
+
+                <article class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <p class="eyebrow">
+                                RISK LEVEL
+                            </p>
+
+                            <h3>
+                                Severity
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="severity-container">
+
+
+                        <div class="severity-item critical">
+
+                            <div>
+
+                                <span
+                                    class="severity-number"
+                                    id="critical-count"
+                                >
+                                    0
+                                </span>
+
+                                <span>
+                                    Critical
+                                </span>
+
+                            </div>
+
+                            <div class="severity-bar">
+
+                                <span
+                                    id="critical-bar"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="severity-item high">
+
+                            <div>
+
+                                <span
+                                    class="severity-number"
+                                    id="high-count"
+                                >
+                                    0
+                                </span>
+
+                                <span>
+                                    High
+                                </span>
+
+                            </div>
+
+                            <div class="severity-bar">
+
+                                <span
+                                    id="high-bar"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="severity-item medium">
+
+                            <div>
+
+                                <span
+                                    class="severity-number"
+                                    id="medium-count"
+                                >
+                                    0
+                                </span>
+
+                                <span>
+                                    Medium
+                                </span>
+
+                            </div>
+
+                            <div class="severity-bar">
+
+                                <span
+                                    id="medium-bar"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="severity-item low">
+
+                            <div>
+
+                                <span
+                                    class="severity-number"
+                                    id="low-count"
+                                >
+                                    0
+                                </span>
+
+                                <span>
+                                    Low
+                                </span>
+
+                            </div>
+
+                            <div class="severity-bar">
+
+                                <span
+                                    id="low-bar"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 QUICK ACTIONS
+                 ================================================== -->
+
+            <section class="quick-actions">
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        WORKSPACE
+                    </p>
+
+                    <h3>
+                        Quick Actions
+                    </h3>
+
+                </div>
+
+
+                <div class="action-grid">
+
+
+                    <button
+                        class="action-card"
+                        data-page="upload"
+                    >
+
+                        <span class="action-icon">
+                            ↑
+                        </span>
+
+                        <strong>
+                            Analyze CSV
+                        </strong>
+
+                        <small>
+                            Upload network-flow data
+                        </small>
+
+                    </button>
+
+
+
+                    <button
+                        class="action-card"
+                        data-page="results"
+                    >
+
+                        <span class="action-icon">
+                            ▥
+                        </span>
+
+                        <strong>
+                            View Results
+                        </strong>
+
+                        <small>
+                            Review the latest analysis
+                        </small>
+
+                    </button>
+
+
+
+                    <button
+                        class="action-card"
+                        data-page="assistant"
+                    >
+
+                        <span class="action-icon">
+                            ✦
+                        </span>
+
+                        <strong>
+                            Security Assistant
+                        </strong>
+
+                        <small>
+                            Ask cybersecurity questions
+                        </small>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             UPLOAD PAGE
+             ================================================== -->
+
+        <section
+            class="page"
+            id="upload-page"
+        >
+
+            <div class="page-heading">
+
+                <p class="eyebrow">
+                    THREAT ANALYSIS
+                </p>
+
+                <h3>
+                    Analyze Network Traffic
+                </h3>
+
+                <p>
+                    Upload a CIC-IDS2017-compatible CSV
+                    containing network-flow features.
+                </p>
+
+            </div>
+
+
+            <div class="upload-container">
+
+
+                <div
+                    class="upload-zone"
+                    id="upload-zone"
+                >
+
+                    <div class="upload-icon">
+                        ↑
+                    </div>
+
+                    <h3>
+                        Upload Network Dataset
+                    </h3>
+
+                    <p>
+                        Drag and drop a CSV file here
+                        or choose a file from your computer.
+                    </p>
+
+
+                    <label class="file-button">
+
+                        Choose CSV File
+
+                        <input
+                            type="file"
+                            id="csv-file"
+                            accept=".csv"
+                            hidden
+                        >
+
+                    </label>
+
+
+                    <small>
+                        Maximum file size: 512 MB
+                    </small>
+
+                </div>
+
+
+
+                <div
+                    class="selected-file hidden"
+                    id="selected-file"
+                >
+
+                    <div>
+
+                        <strong id="file-name">
+                            filename.csv
+                        </strong>
+
+                        <small id="file-size">
+                            0 MB
+                        </small>
+
+                    </div>
+
+
+                    <button
+                        id="analyze-button"
+                        class="primary-button"
+                    >
+
+                        Start Analysis →
+
+                    </button>
+
+                </div>
+
+
+
+                <div
+                    class="analysis-progress hidden"
+                    id="analysis-progress"
+                >
+
+                    <div class="spinner"></div>
+
+                    <h3>
+                        SentinelAI is analyzing
+                        your dataset...
+                    </h3>
+
+                    <p>
+                        The Random Forest detection
+                        engine is processing the
+                        network flows.
+                    </p>
+
+                </div>
+
+
+
+                <div
+                    class="upload-error hidden"
+                    id="upload-error"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             RESULTS PAGE
+             ================================================== -->
+
+        <section
+            class="page"
+            id="results-page"
+        >
+
+            <div class="page-heading">
+
+                <p class="eyebrow">
+                    ANALYSIS RESULTS
+                </p>
+
+                <h3>
+                    Security Results
+                </h3>
+
+                <p>
+                    Review the latest SentinelAI
+                    network traffic analysis.
+                </p>
+
+            </div>
+
+
+            <div
+                class="panel results-empty"
+                id="results-empty"
+            >
+
+                <div class="empty-icon">
+                    ▥
+                </div>
+
+                <h3>
+                    No analyses yet
+                </h3>
+
+                <p>
+                    Upload a CSV dataset to begin
+                    your first SentinelAI analysis.
+                </p>
+
+                <button
+                    class="primary-button"
+                    data-page="upload"
+                >
+                    Analyze Dataset →
+                </button>
+
+            </div>
+
+
+
+            <div
+                id="results-content"
+                class="hidden"
+            >
+
+
+                <!-- ==================================================
+                     RESULT SUMMARY + REPORT BUTTON
+                     ================================================== -->
+
+                <div
+                    class="result-summary"
+                    style="
+                        align-items: stretch;
+                    "
+                >
+
+
+                    <div class="panel">
+
+                        <p class="eyebrow">
+                            DATASET
+                        </p>
+
+                        <h3 id="result-file-name">
+                            —
+                        </h3>
+
+                        <p class="result-meta">
+                            Latest completed analysis
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="panel result-severity-card">
+
+                        <p class="eyebrow">
+                            HIGHEST SEVERITY
+                        </p>
+
+                        <strong id="result-severity">
+                            UNKNOWN
+                        </strong>
+
+                    </div>
+
+
+                    <!-- SOC REPORT -->
+
+                    <div
+                        class="panel"
+                        style="
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: flex-start;
+                        "
+                    >
+
+                        <p class="eyebrow">
+                            SOC REPORT
+                        </p>
+
+                        <h3
+                            style="
+                                margin-bottom: 8px;
+                            "
+                        >
+                            Security Report
+                        </h3>
+
+                        <p
+                            class="result-meta"
+                            style="
+                                margin-bottom: 14px;
+                            "
+                        >
+                            Generate a professional
+                            SOC analysis report.
+                        </p>
+
+                        <button
+                            type="button"
+                            id="generate-report-button"
+                            class="primary-button"
+                        >
+
+                            📄 Generate SOC Report
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     RESULT STATISTICS
+                     ================================================== -->
+
+                <div class="stats-grid result-stats">
+
+
+                    <article class="stat-card">
+
+                        <span class="result-label">
+                            Total Flows
+                        </span>
+
+                        <strong id="result-total">
+                            0
+                        </strong>
+
+                    </article>
+
+
+
+                    <article class="stat-card danger">
+
+                        <span class="result-label">
+                            Malicious
+                        </span>
+
+                        <strong id="result-malicious">
+                            0
+                        </strong>
+
+                    </article>
+
+
+
+                    <article class="stat-card success">
+
+                        <span class="result-label">
+                            Benign
+                        </span>
+
+                        <strong id="result-benign">
+                            0
+                        </strong>
+
+                    </article>
+
+
+
+                    <article class="stat-card warning">
+
+                        <span class="result-label">
+                            Attack Rate
+                        </span>
+
+                        <strong id="result-attack-rate">
+                            0%
+                        </strong>
+
+                    </article>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     ATTACKS + SEVERITY
+                     ================================================== -->
+
+                <div class="dashboard-grid">
+
+
+                    <article class="panel large-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <p class="eyebrow">
+                                    THREAT INTELLIGENCE
+                                </p>
+
+                                <h3>
+                                    Detected Attacks
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="attack-list result-attack-list"
+                            id="result-attack-list"
+                        ></div>
+
+                    </article>
+
+
+
+                    <article class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <p class="eyebrow">
+                                    RISK LEVEL
+                                </p>
+
+                                <h3>
+                                    Severity Distribution
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="severity-container result-severity-container"
+                        >
+
+
+                            <div class="severity-item critical">
+
+                                <div>
+
+                                    <span
+                                        class="severity-number"
+                                        id="result-critical"
+                                    >
+                                        0
+                                    </span>
+
+                                    <span>
+                                        Critical
+                                    </span>
+
+                                </div>
+
+                                <div class="severity-bar">
+
+                                    <span
+                                        id="result-critical-bar"
+                                    ></span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="severity-item high">
+
+                                <div>
+
+                                    <span
+                                        class="severity-number"
+                                        id="result-high"
+                                    >
+                                        0
+                                    </span>
+
+                                    <span>
+                                        High
+                                    </span>
+
+                                </div>
+
+                                <div class="severity-bar">
+
+                                    <span
+                                        id="result-high-bar"
+                                    ></span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="severity-item medium">
+
+                                <div>
+
+                                    <span
+                                        class="severity-number"
+                                        id="result-medium"
+                                    >
+                                        0
+                                    </span>
+
+                                    <span>
+                                        Medium
+                                    </span>
+
+                                </div>
+
+                                <div class="severity-bar">
+
+                                    <span
+                                        id="result-medium-bar"
+                                    ></span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="severity-item low">
+
+                                <div>
+
+                                    <span
+                                        class="severity-number"
+                                        id="result-low"
+                                    >
+                                        0
+                                    </span>
+
+                                    <span>
+                                        Low
+                                    </span>
+
+                                </div>
+
+                                <div class="severity-bar">
+
+                                    <span
+                                        id="result-low-bar"
+                                    ></span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     RECOMMENDATIONS
+                     ================================================== -->
+
+                <article class="panel recommendations-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <p class="eyebrow">
+                                RESPONSE
+                            </p>
+
+                            <h3>
+                                Security Recommendations
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="recommendations-list"
+                        class="recommendations-list"
+                    ></div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             AI ASSISTANT PAGE
+             ================================================== -->
+
+        <section
+            class="page"
+            id="assistant-page"
+        >
+
+            <div class="page-heading">
+
+                <p class="eyebrow">
+                    CYBERSECURITY ASSISTANT
+                </p>
+
+                <h3>
+                    SentinelAI Assistant
+                </h3>
+
+                <p>
+                    Ask questions about network security
+                    and your analysis.
+                </p>
+
+            </div>
+
+
+
+            <!-- ASSISTANT STATUS -->
+
+            <div
+                class="assistant-warning"
+                id="assistant-status"
+            >
+
+                <span>
+                    ●
+                </span>
+
+                <div>
+
+                    <strong id="assistant-status-title">
+                        Connecting to AI Assistant...
+                    </strong>
+
+                    <p id="assistant-status-message">
+                        Checking assistant service.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ASSISTANT CHAT -->
+
+            <div class="assistant-panel">
+
+
+                <div
+                    class="assistant-chat"
+                    id="assistant-chat"
+                >
+
+
+                    <div class="assistant-message">
+
+                        <div class="assistant-avatar">
+                            AI
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                SentinelAI
+                            </strong>
+
+                            <p>
+                                Hello! I'm your cybersecurity
+                                assistant. Ask me about DDoS,
+                                PortScan, XSS, brute-force
+                                attacks, severity, or your
+                                SentinelAI analysis.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SUGGESTED QUESTIONS -->
+
+                <div class="suggested-questions">
+
+                    <p>
+                        Suggested questions
+                    </p>
+
+
+                    <button type="button">
+                        What attacks were detected?
+                    </button>
+
+
+                    <button type="button">
+                        What does Critical severity mean?
+                    </button>
+
+
+                    <button type="button">
+                        How should I respond to a DDoS attack?
+                    </button>
+
+                </div>
+
+
+
+                <!-- CHAT INPUT -->
+
+                <div class="assistant-input-area">
+
+                    <input
+                        type="text"
+                        id="assistant-input"
+                        placeholder="Ask a cybersecurity question..."
+                        autocomplete="off"
+                    >
+
+
+                    <button
+                        type="button"
+                        id="assistant-send"
+                        class="primary-button"
+                    >
+                        Send
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             ABOUT PAGE
+             ================================================== -->
+
+        <section
+            class="page"
+            id="about-page"
+        >
+
+            <div class="page-heading">
+
+                <p class="eyebrow">
+                    ABOUT THE PROJECT
+                </p>
+
+                <h3>
+                    SentinelAI
+                </h3>
+
+                <p>
+                    Intelligent Network Threat Detection
+                    and Cybersecurity Assistant.
+                </p>
+
+            </div>
+
+
+            <div class="about-grid">
+
+
+                <article class="panel">
+
+                    <p class="eyebrow">
+                        OBJECTIVE
+                    </p>
+
+                    <h3>
+                        What is SentinelAI?
+                    </h3>
+
+                    <p class="about-text">
+                        SentinelAI is a machine-learning
+                        based network threat detection
+                        system designed to analyze
+                        network-flow data and identify
+                        potentially malicious activity.
+                    </p>
+
+                </article>
+
+
+
+                <article class="panel">
+
+                    <p class="eyebrow">
+                        MACHINE LEARNING
+                    </p>
+
+                    <h3>
+                        Detection Engine
+                    </h3>
+
+                    <p class="about-text">
+                        SentinelAI uses a Random Forest
+                        classifier trained on CIC-IDS2017
+                        network-flow data to classify
+                        network traffic into multiple
+                        attack categories.
+                    </p>
+
+                </article>
+
+
+
+                <article class="panel">
+
+                    <p class="eyebrow">
+                        TECHNOLOGY
+                    </p>
+
+                    <h3>
+                        Technology Stack
+                    </h3>
+
+                    <ul class="tech-list">
+
+                        <li>
+                            Python
+                        </li>
+
+                        <li>
+                            Scikit-learn
+                        </li>
+
+                        <li>
+                            FastAPI
+                        </li>
+
+                        <li>
+                            HTML / CSS / JavaScript
+                        </li>
+
+
+                    </ul>
+
+                </article>
+
+
+
+                <article class="panel">
+
+                    <p class="eyebrow">
+                        DATASET
+                    </p>
+
+                    <h3>
+                        CIC-IDS2017
+                    </h3>
+
+                    <p class="about-text">
+                        The project uses network-flow
+                        features from the CIC-IDS2017
+                        intrusion detection dataset.
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>

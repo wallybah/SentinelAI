@@ -1,0 +1,99 @@
+{
+  "success": true,
+  "file_name": "tmpd79n8d7o.csv",
+  "total_records": 225745,
+  "benign_records": 97258,
+  "malicious_records": 128487,
+  "malicious_percentage": 56.92,
+  "highest_severity": "CRITICAL",
+  "attack_distribution": {
+    "DDoS": 127982,
+    "BENIGN": 97258,
+    "Bot": 260,
+    "Web Attack � XSS": 106,
+    "DoS Hulk": 72,
+    "SSH-Patator": 30,
+    "Web Attack � Brute Force": 18,
+    "DoS Slowhttptest": 15,
+    "DoS GoldenEye": 3,
+    "PortScan": 1
+  },
+  "severity_distribution": {
+    "CRITICAL": 128054,
+    "LOW": 97258,
+    "HIGH": 432,
+    "MEDIUM": 1
+  },
+  "recommendations": {
+    "DDoS": [
+      "Enable rate limiting for incoming network traffic.",
+      "Apply firewall rules to restrict suspicious traffic sources.",
+      "Use DDoS mitigation or traffic filtering services.",
+      "Monitor traffic volume and connection rates for abnormal spikes.",
+      "Review affected services and verify their availability."
+    ],
+    "BENIGN": [
+      "No immediate malicious activity was detected.",
+      "Continue normal network monitoring.",
+      "Maintain current firewall and security controls.",
+      "Keep systems and security software updated."
+    ],
+    "Bot": [
+      "Investigate the affected host for signs of malware.",
+      "Check running processes and unusual network connections.",
+      "Update operating systems and security software.",
+      "Review outbound connections from the affected system.",
+      "Isolate the host if malicious activity is confirmed."
+    ],
+    "Web Attack � XSS": [
+      "Apply proper input validation and output encoding.",
+      "Use appropriate Content Security Policy controls.",
+      "Review affected web application endpoints.",
+      "Sanitize untrusted user input.",
+      "Test the application for additional cross-site scripting vulnerabilities."
+    ],
+    "DoS Hulk": [
+      "Apply rate limiting to affected services.",
+      "Block or restrict suspicious traffic sources.",
+      "Review web-server and firewall logs.",
+      "Monitor server resource utilization.",
+      "Deploy appropriate DoS mitigation controls."
+    ],
+    "SSH-Patator": [
+      "Review SSH authentication logs.",
+      "Enable login throttling or account lockout controls.",
+      "Restrict SSH access to trusted IP addresses.",
+      "Disable password authentication when appropriate.",
+      "Use strong authentication and SSH keys."
+    ],
+    "Web Attack � Brute Force": [
+      "Enable authentication rate limiting.",
+      "Review login and authentication logs.",
+      "Use account lockout or progressive delays.",
+      "Require strong passwords and multi-factor authentication.",
+      "Investigate repeated requests from suspicious sources."
+    ],
+    "DoS Slowhttptest": [
+      "Review slow HTTP connection activity.",
+      "Configure appropriate connection and request timeouts.",
+      "Apply rate limiting to suspicious clients.",
+      "Review web-server resource utilization.",
+      "Use firewall or reverse-proxy protections where appropriate."
+    ],
+    "DoS GoldenEye": [
+      "Investigate the source of the denial-of-service traffic.",
+      "Apply rate limiting and traffic filtering.",
+      "Review firewall rules for suspicious connections.",
+      "Monitor affected services for availability problems.",
+      "Consider DDoS/DoS mitigation controls."
+    ],
+    "PortScan": [
+      "Investigate the source of the scanning activity.",
+      "Restrict unnecessary open ports using firewall rules.",
+      "Disable unused network services.",
+      "Review firewall and IDS/IPS logs for repeated scanning attempts.",
+      "Consider restricting management services to trusted networks."
+    ]
+  },
+  "analyzed_at": "2026-09-01T03:58:25.668175+00:00"
+}

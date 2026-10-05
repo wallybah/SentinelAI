@@ -1,0 +1,17 @@
+{
+    "model": "Random Forest",
+    "records": 234194,
+    "training_records": 187355,
+    "testing_records": 46839,
+    "features": 78,
+    "classes": 15,
+    "test_size": 0.2,
+    "random_state": 42,
+    "accuracy": 0.9955165567155575,
+    "macro_precision": 0.9297334829937667,
+    "macro_recall": 0.9224944089801451,
+    "macro_f1": 0.9255705980335575,
+    "weighted_precision": 0.9954652370380945,
+    "weighted_recall": 0.9955165567155575,
+    "weighted_f1": 0.9954770356747007
+}
