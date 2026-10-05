@@ -8,17 +8,14 @@ import pandas as pd
 # Paths
 # ---------------------------------------------------------
 
-MODEL_FILE = Path(
-    r"models\sentinelai_random_forest.joblib"
-)
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_DIR = BASE_DIR / "models"
 
-LABEL_ENCODER_FILE = Path(
-    r"models\label_encoder.joblib"
-)
+MODEL_FILE = MODEL_DIR / "sentinelai_random_forest.joblib"
 
-FEATURE_FILE = Path(
-    r"models\feature_names.joblib"
-)
+LABEL_ENCODER_FILE = MODEL_DIR / "label_encoder.joblib"
+
+FEATURE_FILE = MODEL_DIR / "feature_names.joblib"
 
 
 # ---------------------------------------------------------
@@ -39,9 +36,9 @@ SEVERITY_MAP = {
     "Infiltration": "CRITICAL",
     "PortScan": "MEDIUM",
     "SSH-Patator": "HIGH",
-    "Web Attack � Brute Force": "HIGH",
-    "Web Attack � Sql Injection": "CRITICAL",
-    "Web Attack � XSS": "HIGH",
+    "Web Attack ï¿½ Brute Force": "HIGH",
+    "Web Attack ï¿½ Sql Injection": "CRITICAL",
+    "Web Attack ï¿½ XSS": "HIGH",
 }
 
 
