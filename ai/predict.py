@@ -24,7 +24,6 @@ FEATURE_FILE = MODEL_DIR / "feature_names.joblib"
 
 SEVERITY_MAP = {
     "BENIGN": "LOW",
-
     "Bot": "HIGH",
     "DDoS": "CRITICAL",
     "DoS GoldenEye": "HIGH",
@@ -36,9 +35,9 @@ SEVERITY_MAP = {
     "Infiltration": "CRITICAL",
     "PortScan": "MEDIUM",
     "SSH-Patator": "HIGH",
-    "Web Attack ï¿½ Brute Force": "HIGH",
-    "Web Attack ï¿½ Sql Injection": "CRITICAL",
-    "Web Attack ï¿½ XSS": "HIGH",
+    "Web Attack - Brute Force": "HIGH",
+    "Web Attack - Sql Injection": "CRITICAL",
+    "Web Attack - XSS": "HIGH",
 }
 
 

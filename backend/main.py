@@ -584,6 +584,25 @@ async def analyze_csv(
                 ).isoformat(),
         }
 
+        # ----------------------------------------------------
+        # Save latest analysis for dashboard and AI Assistant
+        # ----------------------------------------------------
+
+        import json
+
+        with open(
+            LATEST_ANALYSIS_FILE,
+            "w",
+            encoding="utf-8",
+        ) as file:
+
+            json.dump(
+                response,
+                file,
+                indent=2,
+                ensure_ascii=False,
+            )
+
         return response
 
     except FileNotFoundError as error:
@@ -602,10 +621,14 @@ async def analyze_csv(
 
     except Exception as error:
 
+        import traceback
+
         print(
             "Analysis error:",
             repr(error),
         )
+
+        traceback.print_exc()
 
         raise HTTPException(
             status_code=500,
@@ -628,7 +651,7 @@ async def analyze_csv(
             except Exception:
                 pass
 
-        await file.close()
+        file.close()
 
 
 # ============================================================
