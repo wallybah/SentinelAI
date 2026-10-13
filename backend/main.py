@@ -1662,7 +1662,7 @@ def generate_soc_pdf(
 
                 story.append(
                     Paragraph(
-                        f"Ã¢â‚¬Â¢ {item}",
+                        f"&bull; {item}",
                         small_style,
                     )
                 )
