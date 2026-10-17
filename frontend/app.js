@@ -2461,10 +2461,6 @@ async function analyzeCSV() {
             data;
 
 
-        localStorage.setItem(
-            "sentinelai_last_analysis",
-            JSON.stringify(data)
-        );
 
 
         updateDashboard(
@@ -2998,7 +2994,13 @@ async function sendAssistantQuestion(
                     body: JSON.stringify({
 
                         question:
-                            cleanQuestion
+                            cleanQuestion,
+
+                        analysis:
+                            currentAnalysis,
+
+                        analysis_context_supplied:
+                            true
 
                     })
 
@@ -3502,8 +3504,6 @@ async function initializeApp() {
     setupAssistant();
 
     setupSOCReportButton();
-
-    loadSavedAnalysis();
 
     await checkApiHealth();
 

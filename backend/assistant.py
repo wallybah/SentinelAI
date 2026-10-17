@@ -78,6 +78,8 @@ ML_CONFUSION_FILE = (
 
 class AssistantRequest(BaseModel):
     question: str
+    analysis: dict | None = None
+    analysis_context_supplied: bool = False
 
 
 # ============================================================
@@ -1844,7 +1846,8 @@ def general_response(analysis):
 # MAIN RESPONSE ENGINE
 # ============================================================
 
-def generate_response(question):
+def generate_response(question, analysis_override=None,
+                      analysis_context_supplied=False):
 
     q = question.lower().strip()
 
@@ -1854,7 +1857,10 @@ def generate_response(question):
             "Please enter a cybersecurity question."
         )
 
-    analysis = load_latest_analysis()
+    if analysis_context_supplied:
+        analysis = analysis_override
+    else:
+        analysis = load_latest_analysis()
 
     # --------------------------------------------------------
     # GREETING
@@ -1872,16 +1878,6 @@ def generate_response(question):
             "Hello! I am the SentinelAI cybersecurity "
             "assistant. I can analyze your latest SentinelAI "
             "results and answer SOC-related questions."
-        )
-
-    # --------------------------------------------------------
-    # NO ANALYSIS
-    # --------------------------------------------------------
-
-    if analysis is None:
-
-        return general_response(
-            None
         )
 
     # --------------------------------------------------------
@@ -1954,6 +1950,122 @@ def generate_response(question):
         or "xss confusion" in q
     ):
         return xss_model_response()
+    # --------------------------------------------------------
+    # GENERAL CYBERSECURITY QUESTIONS WITHOUT A CSV
+    # --------------------------------------------------------
+
+    if analysis is None:
+        if (
+            ("critical" in q or "severity" in q)
+            and ("what does" in q or "what is" in q
+                 or "meaning" in q or "define" in q)
+        ):
+            return (
+                "Critical severity indicates a potentially high-impact "
+                "security event that should be prioritized for investigation. "
+                "Review affected systems, supporting evidence, and potential "
+                "business impact. Severity alone does not prove compromise."
+            )
+
+        # Do not answer analysis-specific questions using general
+        # cybersecurity definitions when no current CSV is loaded.
+        analysis_question_markers = (
+            "how many",
+            "count of",
+            "number of",
+            "detected",
+            "latest analysis",
+            "this dataset",
+            "in this dataset",
+            "attack rate",
+            "malicious percentage",
+            "highest severity",
+            "most common attack",
+            "which attacks",
+            "what attacks",
+            "analysis results",
+        )
+
+        if any(marker in q for marker in analysis_question_markers):
+            return (
+                "There is no analysis loaded in the current session, "
+                "so I cannot give reliable counts or results. Please "
+                "upload and analyze a network-flow CSV first."
+            )
+
+        general_topics = {
+            "ddos": (
+                "A Distributed Denial-of-Service (DDoS) attack floods a "
+                "service or network with traffic from multiple sources to "
+                "make it slow or unavailable. Defenses can include traffic "
+                "filtering, rate limiting, and DDoS mitigation services."
+            ),
+            "phishing": (
+                "Phishing is a social-engineering attack in which an attacker "
+                "uses deceptive messages or websites to trick people into "
+                "revealing information, opening malicious files, or visiting "
+                "unsafe links. Verify senders and URLs before acting."
+            ),
+            "ransomware": (
+                "Ransomware is malware that encrypts files or otherwise "
+                "disrupts access to data, often demanding payment. Defenses "
+                "include tested backups, timely patching, endpoint protection, "
+                "and isolating affected systems."
+            ),
+            "firewall": (
+                "A firewall filters network traffic according to security "
+                "rules. It can allow approved connections and block traffic "
+                "that violates the configured policy."
+            ),
+            "port scan": (
+                "A port scan probes a host's network ports to discover "
+                "available services. It can be used for legitimate auditing "
+                "or reconnaissance by an attacker; investigate the source, "
+                "target, timing, and related activity."
+            ),
+            "sql injection": (
+                "SQL injection occurs when untrusted input is incorporated "
+                "unsafely into database queries. Use parameterized queries, "
+                "input validation, and least-privilege database accounts."
+            ),
+            "xss": (
+                "Cross-site scripting (XSS) occurs when a website allows "
+                "untrusted content to execute as script in another user's "
+                "browser. Context-aware output encoding and safe templating "
+                "help prevent it."
+            ),
+            "brute force": (
+                "A brute-force attack repeatedly tries passwords or other "
+                "credentials until a match is found. Defenses include "
+                "multi-factor authentication, rate limiting, strong unique "
+                "passwords, and monitoring repeated failures."
+            ),
+            "malware": (
+                "Malware is software designed to harm systems, steal data, "
+                "or perform unauthorized actions. Investigate suspicious "
+                "files and processes, isolate affected devices when needed, "
+                "and use trusted security tools."
+            ),
+        }
+
+        for topic, answer in general_topics.items():
+            if topic in q:
+                return answer
+
+        if (
+            "what is sentinelai" in q
+            or "about sentinelai" in q
+            or q == "sentinelai"
+        ):
+            return (
+                "SentinelAI analyzes uploaded network-flow CSV data using "
+                "a machine-learning classifier, presents detected traffic "
+                "categories and severity, and provides cybersecurity "
+                "explanations and SOC-oriented reports."
+            )
+
+        return general_response(None)
+
     # --------------------------------------------------------
     # SUMMARY
     # --------------------------------------------------------
@@ -2363,7 +2475,9 @@ def chat(
 ):
 
     response = generate_response(
-        request.question
+        request.question,
+        analysis_override=request.analysis,
+        analysis_context_supplied=request.analysis_context_supplied,
     )
 
     return {
